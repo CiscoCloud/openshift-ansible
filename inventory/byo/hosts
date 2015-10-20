@@ -11,14 +11,14 @@ etcd
 # SSH user, this user should allow ssh based auth without requiring a
 # password. If using ssh key based auth, then the key should be managed by an
 # ssh agent.
-ansible_ssh_user=root
+ansible_ssh_user=centos
 
 # If ansible_ssh_user is not root, ansible_sudo must be set to true and the
 # user must be configured for passwordless sudo
-#ansible_sudo=true
+ansible_sudo=true
 
 # deployment type valid values are origin, online and enterprise
-deployment_type=atomic-enterprise
+deployment_type=origin
 
 # Enable cluster metrics
 #use_cluster_metrics=true
@@ -60,8 +60,11 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 #openshift_master_cluster_public_hostname=openshift-ansible.test.example.com
 #openshift_master_cluster_defer_ha=True
 
+# SDN cluster network CIDR
+osm_cluster_network_cidr=10.100.0.0/16
+
 # default subdomain to use for exposed routes
-#osm_default_subdomain=apps.test.example.com
+osm_default_subdomain=apps.example.com
 
 # additional cors origins
 #osm_custom_cors_origins=['foo.example.com', 'bar.example.com']
