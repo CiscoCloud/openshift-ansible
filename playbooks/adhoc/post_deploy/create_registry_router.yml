@@ -1,0 +1,27 @@
+---
+# Prepare everything so that you can start creating apps.
+
+- name: Perform OpenShift post deployment steps
+  hosts: masters
+  user: centos
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+
+  vars:
+    registry_kubeconfig: /etc/origin/master/openshift-registry.kubeconfig
+    router_kubeconfig: /etc/origin/master/openshift-router.kubeconfig
+    router_name: router-west
+    router_replicas_number: 2
+
+  tasks:
+
+  - name: Create registry
+    shell: "oadm registry --credentials={{ registry_kubeconfig }}"
+    run_once: True
+
+  - name: Create router
+    shell: "oadm router {{ router_name }}
+            --replicas={{ router_replicas_number }}
+            --credentials={{ router_kubeconfig }} --service-account=router"
+    run_once: True
