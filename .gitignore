@@ -16,3 +16,7 @@
 gce.ini
 multi_ec2.yaml
 .vagrant
+
+# terraform
+**/*.tfstate*
+**/.terraform
