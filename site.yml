@@ -1,0 +1,12 @@
+---
+- name: Deploy OpenShift Origin
+  hosts: all
+  sudo: yes
+  gather_facts: no
+  vars:
+    ansible_sudo: true
+    ansible_ssh_user: centos
+    deployment_type: origin
+    osm_cluster_network_cidr: 10.100.0.0/16
+    osm_default_subdomain: apps.openshift.demo
+  include: playbooks/byo/config.yml
