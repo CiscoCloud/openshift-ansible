@@ -1,2 +1,5 @@
 openshift_hostname:        "{{ inventory_hostname }}"
 openshift_public_hostname: "{{ inventory_hostname }}"
+
+# htpasswd auth
+openshift_master_identity_providers: [{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/openshift/htpasswd'}]
