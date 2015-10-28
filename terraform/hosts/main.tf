@@ -94,7 +94,9 @@ resource "openstack_compute_instance_v2" "master" {
                           }
   metadata              = {
                             dc          = "${ var.datacenter }"
-                            role        = "master"
+                            role        = "masters"
+                            role        = "etcd"
+                            role        = "nodes"
                             ssh_user    = "${ var.ssh_user }"
                           }
   count                 = "${ var.master_count }"
@@ -116,7 +118,7 @@ resource "openstack_compute_instance_v2" "node" {
                           }
   metadata              = {
                             dc          = "${ var.datacenter }"
-                            role        = "node"
+                            role        = "nodes"
                             ssh_user    = "${ var.ssh_user }"
                           }
   count                 = "${ var.node_count }"
