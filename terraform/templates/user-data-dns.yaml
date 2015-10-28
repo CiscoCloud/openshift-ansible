@@ -25,7 +25,7 @@ coreos:
     initial-cluster: default=http://$$private_ipv4:2380
     initial-cluster-state: new
   fleet:
-    metadata: "role=dns"
+    metadata: "roles=dns"
   units:
     - name: setup-network-environment.service
       command: start
