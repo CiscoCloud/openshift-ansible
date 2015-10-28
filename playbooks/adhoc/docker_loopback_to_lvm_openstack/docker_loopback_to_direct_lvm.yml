@@ -7,7 +7,7 @@
 # Warning! We delete /var/lib/docker in this playbook.
 
 - name: Configure Docker Storage
-  hosts: all
+  hosts: nodes
   user: centos
   sudo: yes
   connection: ssh
@@ -20,9 +20,6 @@
     register: loop_device_check
     ignore_errors: yes
 
-  - debug:
-      var: loop_device_check
-
   - name: Fail if loopback devices are not detected
     fail:
       msg: Docker don't use loopback devices.
@@ -32,9 +29,6 @@
     command: test -e /dev/vdb
     register: vdb_check
     ignore_errors: yes
-
-  - debug:
-      var: vdb_check
 
   - name: Fail if /dev/vdb doesn't exist
     fail:
@@ -67,9 +61,6 @@
   - name: Run docker-storage-setup
     command: /bin/docker-storage-setup
     register: setup_output
-
-  - debug:
-      var: setup_output
 
   - name: Start Docker
     service:
