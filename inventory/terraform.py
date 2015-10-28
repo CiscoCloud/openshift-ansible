@@ -83,7 +83,7 @@ def calculate_mi_vars(func):
         name, attrs, groups = func(*args, **kwargs)
 
         # attrs
-        if attrs.get('role', '') == 'control':
+        if attrs.get('roles', '') == 'control':
             attrs['consul_is_server'] = True
         else:
             attrs['consul_is_server'] = False
@@ -184,17 +184,17 @@ def openstack_host(resource, module_name):
     # attrs specific to microservices-infrastructure
     attrs.update({
         'consul_dc': _clean_dc(attrs['metadata'].get('dc', module_name)),
-        'role': attrs['metadata'].get('role', 'none'),
+        'roles': attrs['metadata'].get('roles', 'none'),
     })
 
     # add groups based on attrs
     groups.append('os_image=' + attrs['image']['name'])
     groups.append('os_flavor=' + attrs['flavor']['name'])
-    groups.extend('os_metadata_%s=%s' % item
-                  for item in attrs['metadata'].items())
     groups.append('os_region=' + attrs['region'])
-    groups.append(attrs['metadata'].get('role', 'none'))
     groups.append('dc=' + attrs['consul_dc'])
+
+    for role in attrs['metadata'].get('roles', 'none').split(','):
+        groups.append(role)
 
     return name, attrs, groups
 
