@@ -49,12 +49,6 @@ def iterresources(filenames):
 PARSERS = {}
 
 
-def _clean_dc(dcname):
-    # Consul DCs are strictly alphanumeric with underscores and hyphens -
-    # ensure that the consul_dc attribute meets these requirements.
-    return re.sub('[^\w_\-]', '-', dcname)
-
-
 def iterhosts(resources):
     '''yield host tuples of (name, attributes, groups)'''
     for module_name, key, resource in resources:
@@ -71,28 +65,6 @@ def parses(prefix):
     def inner(func):
         PARSERS[prefix] = func
         return func
-
-    return inner
-
-
-def calculate_mi_vars(func):
-    """calculate microservices-infrastructure vars"""
-
-    @wraps(func)
-    def inner(*args, **kwargs):
-        name, attrs, groups = func(*args, **kwargs)
-
-        # attrs
-        if attrs.get('roles', '') == 'control':
-            attrs['consul_is_server'] = True
-        else:
-            attrs['consul_is_server'] = False
-
-        # groups
-        if attrs.get('publicly_routable', False):
-            groups.append('publicly_routable')
-
-        return name, attrs, groups
 
     return inner
 
@@ -138,7 +110,6 @@ def parse_bool(string_form):
         raise ValueError('could not convert %r to a bool' % string_form)
 
 @parses('openstack_compute_instance_v2')
-@calculate_mi_vars
 def openstack_host(resource, module_name):
     raw_attrs = resource['primary']['attributes']
     name = raw_attrs['name']
@@ -181,17 +152,10 @@ def openstack_host(resource, module_name):
     except (KeyError, ValueError):
         attrs.update({'ansible_ssh_host': '', 'publicly_routable': False})
 
-    # attrs specific to microservices-infrastructure
-    attrs.update({
-        'consul_dc': _clean_dc(attrs['metadata'].get('dc', module_name)),
-        'roles': attrs['metadata'].get('roles', 'none'),
-    })
-
     # add groups based on attrs
     groups.append('os_image=' + attrs['image']['name'])
     groups.append('os_flavor=' + attrs['flavor']['name'])
     groups.append('os_region=' + attrs['region'])
-    groups.append('dc=' + attrs['consul_dc'])
 
     for role in attrs['metadata'].get('roles', 'none').split(','):
         groups.append(role)
