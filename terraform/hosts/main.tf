@@ -74,7 +74,7 @@ resource "openstack_compute_instance_v2" "dns" {
                             fixed_ip_v4 = "${ var.dns_nameservers }"
                           }
   metadata              = {
-                            role        = "dns"
+                            roles       = "dns"
                             ssh_user    = "core"
                           }
   user_data             = "${ template_file.cloud-init-dns.rendered }"
@@ -94,9 +94,7 @@ resource "openstack_compute_instance_v2" "master" {
                           }
   metadata              = {
                             dc          = "${ var.datacenter }"
-                            role        = "masters"
-                            role        = "etcd"
-                            role        = "nodes"
+                            roles       = "masters,etcd,nodes"
                             ssh_user    = "${ var.ssh_user }"
                           }
   count                 = "${ var.master_count }"
@@ -118,7 +116,7 @@ resource "openstack_compute_instance_v2" "node" {
                           }
   metadata              = {
                             dc          = "${ var.datacenter }"
-                            role        = "nodes"
+                            roles       = "nodes"
                             ssh_user    = "${ var.ssh_user }"
                           }
   count                 = "${ var.node_count }"
