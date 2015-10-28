@@ -18,7 +18,9 @@
   - name: Determine if Docker uses loopback devices
     shell: docker info | grep 'Data file:.*loop'
     register: loop_device_check
-    ignore_errors: yes
+    ignore_errors: True
+    failed_when: False
+    changed_when: False
 
   - name: Fail if loopback devices are not detected
     fail:
@@ -28,7 +30,9 @@
   - name: Check if /dev/vdb exists
     command: test -e /dev/vdb
     register: vdb_check
-    ignore_errors: yes
+    ignore_errors: True
+    failed_when: False
+    changed_when: False
 
   - name: Fail if /dev/vdb doesn't exist
     fail:
@@ -60,7 +64,6 @@
 
   - name: Run docker-storage-setup
     command: /bin/docker-storage-setup
-    register: setup_output
 
   - name: Start Docker
     service:
