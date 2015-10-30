@@ -1,0 +1,32 @@
+---
+- name: Start lvm2-lvmetad
+  service:
+    name: lvm2-lvmetad
+    state: started
+    enabled: yes
+
+- name: Stop Docker
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+
+- name: Delete /var/lib/docker
+  command: rm -rf /var/lib/docker
+
+- name: Copy the docker-storage-setup config file
+  copy:
+    src: docker-storage-setup
+    dest: /etc/sysconfig/docker-storage-setup
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Run docker-storage-setup
+  command: /bin/docker-storage-setup
+
+- name: Start Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
