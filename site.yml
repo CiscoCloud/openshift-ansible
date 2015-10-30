@@ -1,7 +1,6 @@
 ---
 - name: Deploy OpenShift Origin
   hosts: all
-  sudo: yes
   gather_facts: no
   vars:
     ansible_sudo: true
