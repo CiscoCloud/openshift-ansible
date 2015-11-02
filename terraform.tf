@@ -13,8 +13,8 @@ variable node_count { }
 variable floating_pool { }
 variable external_net_id { }
 variable subnet_cidr { }
-variable docker_master_volume { }
-variable docker_node_volume { }
+variable master_volume { }
+variable node_volume { }
 variable dns_domain { }
 variable dns_nameservers { }
 variable dns_flavor { }
@@ -50,8 +50,8 @@ module "openstack-hosts" {
   floating_pool         = "${ var.floating_pool }"
   external_net_id       = "${ var.external_net_id }"
   subnet_cidr           = "${ var.subnet_cidr }"
-  docker_master_volume  = "${ var.docker_master_volume }"
-  docker_node_volume    = "${ var.docker_node_volume }"
+  master_volume         = "${ var.master_volume }"
+  node_volume           = "${ var.node_volume }"
   dns_domain            = "${ var.dns_domain }"
   dns_nameservers       = "${ var.dns_nameservers }"
   dns_flavor            = "${ var.dns_flavor }"

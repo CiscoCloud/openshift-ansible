@@ -1,24 +1,24 @@
-variable datacenter             { default = "openstack" }
-variable master_flavor          {}
-variable node_flavor            {}
-variable keypair_name           {}
-variable image_name             {}
-variable master_count           {}
-variable node_count             {}
-variable security_groups        {}
-variable floating_pool          {}
-variable external_net_id        {}
-variable subnet_cidr            {}
-variable ip_version             { default = "4" }
-variable short_name             { default = "vm" }
-variable long_name              { default = "example" }
-variable ssh_user               { default = "centos" }
-variable docker_master_volume   { default = 10 }
-variable docker_node_volume     { default = 20 }
-variable dns_domain             { default = "example.com" }
-variable dns_nameservers        {}
-variable dns_flavor             {}
-variable dns_image_name         {}
+variable datacenter         { default = "openstack" }
+variable master_flavor      {}
+variable node_flavor        {}
+variable keypair_name       {}
+variable image_name         {}
+variable master_count       {}
+variable node_count         {}
+variable security_groups    {}
+variable floating_pool      {}
+variable external_net_id    {}
+variable subnet_cidr        {}
+variable ip_version         { default = "4" }
+variable short_name         { default = "vm" }
+variable long_name          { default = "example" }
+variable ssh_user           { default = "centos" }
+variable master_volume      { default = 10 }
+variable node_volume        { default = 20 }
+variable dns_domain         { default = "example.com" }
+variable dns_nameservers    {}
+variable dns_flavor         {}
+variable dns_image_name     {}
 
 resource "template_file" "cloud-init-dns" {
   filename      = "terraform/templates/user-data-dns.yaml"
@@ -51,14 +51,14 @@ resource "template_file" "cloud-init-node" {
 resource "openstack_blockstorage_volume_v1" "master-volume" {
   name          = "${ var.short_name }-master-${format("%02d", count.index+1) }"
   description   = "${ var.short_name }-master-${format("%02d", count.index+1) }"
-  size          = "${ var.docker_master_volume }"
+  size          = "${ var.master_volume }"
   count         = "${ var.master_count }"
 }
 
 resource "openstack_blockstorage_volume_v1" "node-volume" {
   name          = "${ var.short_name }-node-${format("%02d", count.index+1) }"
   description   = "${ var.short_name }-node-${format("%02d", count.index+1) }"
-  size          = "${ var.docker_node_volume }"
+  size          = "${ var.node_volume }"
   count         = "${ var.node_count }"
 }
 
