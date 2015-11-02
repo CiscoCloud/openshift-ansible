@@ -17,6 +17,7 @@ security_groups = "${ module.openstack-secgroup.cluster_name }"
 floating_pool = ""
 external_net_id = ""
 subnet_cidr = "10.10.5.0/24"
+ssh_user = "centos"
 master_volume = 10
 node_volume = 20
 dns_domain = ""
