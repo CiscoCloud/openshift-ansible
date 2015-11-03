@@ -20,7 +20,7 @@
       name: "{{ item }}"
       groups: oo_etcd_to_config
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     with_items: groups[g_etcd_group] | default([])
 
   - name: Evaluate oo_masters_to_config
@@ -28,7 +28,7 @@
       name: "{{ item }}"
       groups: oo_masters_to_config
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     with_items: groups[g_masters_group] | default([])
 
   - name: Evaluate oo_nodes_to_config
@@ -36,7 +36,7 @@
       name: "{{ item }}"
       groups: oo_nodes_to_config
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     with_items: groups[g_nodes_group] | default([])
 
   - name: Evaluate oo_nodes_to_config
@@ -44,7 +44,7 @@
       name: "{{ item }}"
       groups: oo_nodes_to_config
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     with_items: groups[g_masters_group] | default([])
     when: g_nodeonmaster is defined and g_nodeonmaster == true
 
@@ -53,7 +53,7 @@
       name: "{{ groups[g_etcd_group][0] }}"
       groups: oo_first_etcd
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     when: g_etcd_group in groups and (groups[g_etcd_group] | length) > 0
 
   - name: Evaluate oo_first_master
@@ -61,7 +61,7 @@
       name: "{{ groups[g_masters_group][0] }}"
       groups: oo_first_master
       ansible_ssh_user: "{{ g_ssh_user | default(omit) }}"
-      ansible_sudo: "{{ g_sudo | default(omit) }}"
+      ansible_sudo: yes
     when: g_masters_group in groups and (groups[g_masters_group] | length) > 0
 
 - include: ../openshift-etcd/config.yml
