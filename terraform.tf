@@ -20,7 +20,7 @@ variable dns_domain { }
 variable dns_nameservers { }
 variable dns_flavor { }
 variable dns_image_name { }
-variable extra_public_key { }
+variable extra_public_key { default = "" }
 
 provider "openstack" {
   auth_url              = "${ var.auth_url }"

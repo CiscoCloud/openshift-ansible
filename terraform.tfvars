@@ -26,4 +26,4 @@ dns_flavor = ""
 dns_image_name = "CoreOS"
 # Optional variable. Takes public SSH key as value.
 # It allows to add additional key to authorized_keys on all nodes.
-extra_public_key = ""
+#extra_public_key = ""
