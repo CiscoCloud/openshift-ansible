@@ -19,7 +19,7 @@ variable dns_domain         { default = "example.com" }
 variable dns_nameservers    {}
 variable dns_flavor         {}
 variable dns_image_name     {}
-variable extra_public_key   { default = "" }
+variable extra_public_key   {}
 
 resource "template_file" "cloud-init-dns" {
   filename           = "terraform/templates/user-data-dns.yaml"
