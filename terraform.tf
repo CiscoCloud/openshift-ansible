@@ -20,6 +20,7 @@ variable dns_domain { }
 variable dns_nameservers { }
 variable dns_flavor { }
 variable dns_image_name { }
+variable extra_public_key { }
 
 provider "openstack" {
   auth_url              = "${ var.auth_url }"
@@ -58,4 +59,5 @@ module "openstack-hosts" {
   dns_nameservers       = "${ var.dns_nameservers }"
   dns_flavor            = "${ var.dns_flavor }"
   dns_image_name        = "${ var.dns_image_name }"
+  extra_public_key      = "${ var.extra_public_key }"
 }

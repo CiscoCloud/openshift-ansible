@@ -82,3 +82,5 @@ coreos:
   update:
     group: alpha
     reboot-strategy: etcd-lock
+ssh_authorized_keys:
+  - ${extra_public_key}
