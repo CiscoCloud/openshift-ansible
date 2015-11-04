@@ -41,5 +41,7 @@ write_files:
     path: /etc/resolv.conf
     owner: root:root
     permissions: 0544
+ssh_authorized_keys:
+  - ${extra_public_key}
 #runcmd:
 # - [ /var/lib/cloud/scripts/per-boot/dnsfix.sh ]

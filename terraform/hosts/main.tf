@@ -19,32 +19,36 @@ variable dns_domain         { default = "example.com" }
 variable dns_nameservers    {}
 variable dns_flavor         {}
 variable dns_image_name     {}
+variable extra_public_key   { default = "" }
 
 resource "template_file" "cloud-init-dns" {
-  filename      = "terraform/templates/user-data-dns.yaml"
+  filename           = "terraform/templates/user-data-dns.yaml"
   vars {
-    hostname    = "${ var.short_name }-ns }"
-    domain      = "${ var.dns_domain }"
+    hostname         = "${ var.short_name }-ns }"
+    domain           = "${ var.dns_domain }"
+    extra_public_key = "${ var.extra_public_key }"
   }
 }
 
 resource "template_file" "cloud-init-master" {
-  count         = "${ var.master_count }"
-  filename      = "terraform/templates/user-data.yaml"
+  count              = "${ var.master_count }"
+  filename           = "terraform/templates/user-data.yaml"
   vars {
-    hostname    = "${ var.short_name }-master-${ format("%02d", count.index+1) }"
-    domain      = "${ var.dns_domain }"
-    nameservers = "${ var.dns_nameservers }"
+    hostname         = "${ var.short_name }-master-${ format("%02d", count.index+1) }"
+    domain           = "${ var.dns_domain }"
+    nameservers      = "${ var.dns_nameservers }"
+    extra_public_key = "${ var.extra_public_key }"
   }
 }
 
 resource "template_file" "cloud-init-node" {
-  count         = "${ var.node_count }"
-  filename      = "terraform/templates/user-data.yaml"
+  count              = "${ var.node_count }"
+  filename           = "terraform/templates/user-data.yaml"
   vars {
-    hostname    = "${ var.short_name }-node-${ format("%02d", count.index+1) }"
-    domain      = "${ var.dns_domain }"
-    nameservers = "${ var.dns_nameservers }"
+    hostname         = "${ var.short_name }-node-${ format("%02d", count.index+1) }"
+    domain           = "${ var.dns_domain }"
+    nameservers      = "${ var.dns_nameservers }"
+    extra_public_key = "${ var.extra_public_key }"
   }
 }
 
