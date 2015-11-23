@@ -1,4 +1,4 @@
 ---
 - include: openshift-cluster/config.yml
-- include: ../adhoc/docker_loopback_to_lvm_openstack/docker_loopback_to_direct_lvm.yml
+#- include: ../adhoc/docker_loopback_to_lvm_openstack/docker_loopback_to_direct_lvm.yml
 - include: ../adhoc/post_deploy/create_registry_router.yml
