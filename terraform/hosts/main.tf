@@ -103,7 +103,7 @@ resource "openstack_compute_instance_v2" "master" {
                           }
   count                 = "${ var.master_count }"
   user_data             = "${ element(template_file.cloud-init-master.*.rendered, count.index) }"
-  depends_on            = "openstack_compute_instance_v2.dns"
+  depends_on            = [ "openstack_compute_instance_v2.dns" ]
 }
 
 resource "openstack_compute_instance_v2" "node" {
@@ -125,7 +125,7 @@ resource "openstack_compute_instance_v2" "node" {
                           }
   count                 = "${ var.node_count }"
   user_data             = "${ element(template_file.cloud-init-node.*.rendered, count.index) }"
-  depends_on            = "openstack_compute_instance_v2.dns"
+  depends_on            = [ "openstack_compute_instance_v2.dns" ]
 }
 
 resource "openstack_compute_floatingip_v2" "dns-floatip" {
