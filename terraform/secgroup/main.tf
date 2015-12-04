@@ -16,18 +16,6 @@ resource "openstack_compute_secgroup_v2" "cluster" {
       cidr        = "0.0.0.0/0"
     }
     rule {
-      from_port   = 53
-      to_port     = 53
-      ip_protocol = "udp"
-      cidr        = "0.0.0.0/0"
-    }
-    rule {
-      from_port   = 53
-      to_port     = 53
-      ip_protocol = "tcp"
-      cidr        = "0.0.0.0/0"
-    }
-    rule {
       from_port   = 8443
       to_port     = 8443
       ip_protocol = "tcp"
